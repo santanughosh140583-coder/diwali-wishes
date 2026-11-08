@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>শুভ দীপাবলি | Happy Diwali</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at 50% 25%, #2b0938 0%, #14031c 55%, #07010c 100%);
+      color: #fff6e0;
+      font-family: 'Hind Siliguri', sans-serif;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      user-select: none;
+    }
+
+    /* Fireworks & Lanterns Canvas */
+    #skyCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Top Decorative Toran / Lights */
+    .fairy-lights {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      z-index: 4;
+      pointer-events: none;
+      padding: 0 10px;
+    }
+
+    .bulb {
+      width: 12px;
+      height: 18px;
+      border-radius: 50% 50% 45% 45%;
+      background: #ffcc33;
+      box-shadow: 0 0 15px #ff9900, 0 0 30px #ff5500;
+      animation: twinkle 1.6s infinite alternate;
+    }
+
+    .bulb:nth-child(even) {
+      background: #ff4d6d;
+      box-shadow: 0 0 15px #ff4d6d, 0 0 30px #c9184a;
+      animation-delay: 0.8s;
+    }
+
+    .bulb:nth-child(3n) {
+      background: #4cc9f0;
+      box-shadow: 0 0 15px #4cc9f0, 0 0 30px #4361ee;
+      animation-delay: 0.4s;
+    }
+
+    @keyframes twinkle {
+      0% { opacity: 0.45; transform: scale(0.9); }
+      100% { opacity: 1; transform: scale(1.1); }
+    }
+
+    /* Music Controls Container */
+    .music-controls {
+      position: fixed;
+      top: 22px;
+      right: 22px;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+    }
+
+    .music-btn {
+      background: rgba(255, 195, 0, 0.16);
+      border: 1.5px solid #ffd166;
+      color: #ffd166;
+      padding: 9px 16px;
+      border-radius: 50px;
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(255, 183, 3, 0.25);
+    }
+
+    .music-btn:hover {
+      background: #ffd166;
+      color: #1a0424;
+      transform: translateY(-2px);
+    }
+
+    /* Main Card */
+    .card {
+      position: relative;
+      z-index: 5;
+      max-width: 540px;
+      width: 92%;
+      margin: 40px auto;
+      padding: 36px 26px 32px;
+      border-radius: 28px;
+      background: linear-gradient(160deg, rgba(46, 12, 58, 0.72), rgba(18, 4, 26, 0.85));
+      border: 1.5px solid rgba(255, 209, 102, 0.45);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.75), inset 0 0 35px rgba(255, 170, 0, 0.15);
+      backdrop-filter: blur(10px);
+      text-align: center;
+    }
+
+    .sub-heading {
+      font-size: 1rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #ffbe0b;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    h1 {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      background: linear-gradient(to right, #fff3b0, #ffd166, #ff9f1c, #ffd166);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 4px 24px rgba(255, 179, 0, 0.35);
+      margin-bottom: 4px;
+    }
+
+    .bengali-title {
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: #ffe599;
+      margin-bottom: 24px;
+    }
+
+    /* Mandala Photo Frame */
+    .photo-wrapper {
+      position: relative;
+      width: 220px;
+      height: 220px;
+      margin: 0 auto 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mandala-ring {
+      position: absolute;
+      inset: -14px;
+      border-radius: 50%;
+      border: 3px dashed #ffb703;
+      box-shadow: 0 0 25px rgba(255, 183, 3, 0.55), inset 0 0 20px rgba(255, 111, 0, 0.45);
+      animation: spinSlow 24s linear infinite;
+    }
+
+    .mandala-ring::before {
+      content: "";
+      position: absolute;
+      inset: 6px;
+      border-radius: 50%;
+      border: 2px dotted #ff5d8f;
+    }
+
+    @keyframes spinSlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .photo-frame {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 4px solid #ffd166;
+      box-shadow: 0 0 30px rgba(255, 166, 0, 0.65);
+      position: relative;
+      z-index: 2;
+      background: #240730;
+    }
+
+    .photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: contrast(1.05) saturate(1.12);
+    }
+
+    /* Greeting Text */
+    .wish-text {
+      font-size: 1.12rem;
+      line-height: 1.75;
+      color: #f8edeb;
+      margin-bottom: 14px;
+      padding: 0 8px;
+    }
+
+    .sender-name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #ffd166;
+      margin-bottom: 26px;
+    }
+
+    /* Interactive Diyas */
+    .diya-instruction {
+      font-size: 0.9rem;
+      color: #ffccd5;
+      margin-bottom: 12px;
+      opacity: 0.9;
+    }
+
+    .diya-row {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .diya {
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.25s ease;
+    }
+
+    .diya:hover {
+      transform: translateY(-4px) scale(1.06);
+    }
+
+    .flame {
+      width: 14px;
+      height: 24px;
+      background: radial-gradient(circle at 50% 70%, #ffffff 10%, #ffea00 45%, #ff6d00 85%, transparent 100%);
+      border-radius: 50% 50% 35% 35%;
+      margin-bottom: -3px;
+      box-shadow: 0 0 16px #ffbe0b, 0 0 32px #fb5607;
+      animation: flicker 0.18s infinite alternate;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .diya.unlit .flame {
+      opacity: 0;
+      transform: scale(0.2);
+      pointer-events: none;
+    }
+
+    @keyframes flicker {
+      0% { transform: scale(1) rotate(-2deg); }
+      100% { transform: scale(1.08, 0.94) rotate(2deg); }
+    }
+
+    .clay-bowl {
+      width: 44px;
+      height: 18px;
+      background: linear-gradient(to bottom, #d95d39, #8c2f19);
+      border-radius: 4px 4px 22px 22px;
+      border-top: 2px solid #ffb703;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+    }
+
+    .hint-footer {
+      margin-top: 20px;
+      font-size: 0.85rem;
+      color: rgba(255, 229, 153, 0.7);
+    }
+  </style>
+</head>
+<body>
+
+  <audio id="bgMusic" src="music.mp3" loop preload="auto"></audio>
+  <input type="file" id="audioPicker" accept="audio/*" style="display:none" onchange="loadCustomSong(event)">
+
+  <!-- Music Control Buttons -->
+  <div class="music-controls" onclick="event.stopPropagation()">
+    <button class="music-btn" id="musicBtn" onclick="toggleMusic(event)">
+      <span id="musicIcon">🎵</span>
+      <span id="musicText">গান চালান (Play Music)</span>
+    </button>
+    <button class="music-btn" onclick="document.getElementById('audioPicker').click()">
+      <span>📂</span>
+      <span>গান বেছে নিন</span>
+    </button>
+  </div>
+
+  <!-- Top Fairy Lights -->
+  <div class="fairy-lights" id="fairyLights"></div>
+
+  <!-- Sky Canvas for Fireworks & Floating Lanterns -->
+  <canvas id="skyCanvas"></canvas>
+
+  <!-- Main Diwali Card -->
+  <div class="card">
+    <div class="sub-heading">Festival of Lights</div>
+    <h1>Happy Diwali</h1>
+    <div class="bengali-title">✨ শুভ দীপাবলির প্রীতি ও শুভেচ্ছা ✨</div>
+
+    <!-- Fixed Photo with Mandala Frame -->
+    <div class="photo-wrapper">
+      <div class="mandala-ring"></div>
+      <div class="photo-frame">
+        <img src="photo.jpeg" alt="My Diwali Photo" />
+      </div>
+    </div>
+
+    <p class="wish-text">
+      আলোর এই পবিত্র উৎসবে আপনার ও আপনার পরিবারের জীবন হয়ে উঠুক সুখ, শান্তি, সমৃদ্ধি আর অনাবিল আনন্দে পরিপূর্ণ। অন্ধকার দূর হয়ে জ্বলে উঠুক আশার নতুন প্রদীপ।
+    </p>
+    <div class="sender-name">— ইতি, কবিতা ঘোষ (সাউ)</div>
+
+    <!-- Interactive Diyas -->
+    <div class="diya-instruction">প্রদীপের ওপর ক্লিক করে নেভান বা জ্বালান:</div>
+    <div class="diya-row" id="diyaRow">
+      <div class="diya" onclick="toggleDiya(this, event)"><div class="flame"></div><div class="clay-bowl"></div></div>
+      <div class="diya" onclick="toggleDiya(this, event)"><div class="flame"></div><div class="clay-bowl"></div></div>
+      <div class="diya" onclick="toggleDiya(this, event)"><div class="flame"></div><div class="clay-bowl"></div></div>
+      <div class="diya" onclick="toggleDiya(this, event)"><div class="flame"></div><div class="clay-bowl"></div></div>
+      <div class="diya" onclick="toggleDiya(this, event)"><div class="flame"></div><div class="clay-bowl"></div></div>
+    </div>
+
+    <div class="hint-footer">🎆 আতশবাজি ফোটাতে স্ক্রিনের যেকোনো জায়গায় ক্লিক করুন</div>
+  </div>
+
+  <script>
+    // 1. Fairy Lights Setup
+    const lightsContainer = document.getElementById('fairyLights');
+    const bulbCount = Math.floor(window.innerWidth / 45);
+    for (let i = 0; i < bulbCount; i++) {
+      const bulb = document.createElement('div');
+      bulb.className = 'bulb';
+      lightsContainer.appendChild(bulb);
+    }
+
+    // 2. Custom Downloaded Audio Control
+    const bgMusic = document.getElementById('bgMusic');
+    const musicText = document.getElementById('musicText');
+    const musicIcon = document.getElementById('musicIcon');
+    let isPlaying = false;
+
+    function toggleMusic(e) {
+      if (e) e.stopPropagation();
+      if (isPlaying) {
+        bgMusic.pause();
+        musicText.textContent = 'গান চালান (Play Music)';
+        musicIcon.textContent = '🎵';
+        isPlaying = false;
+      } else {
+        bgMusic.play().then(() => {
+          musicText.textContent = 'গান চলছে (Pause)';
+          musicIcon.textContent = '🔊';
+          isPlaying = true;
+        }).catch((err) => {
+          musicText.textContent = 'গান পাওয়া যায়নি (' + err.name + ')';
+          musicIcon.textContent = '⚠️';
+        });
+      }
+    }
+
+    function loadCustomSong(event) {
+      const file = event.target.files[0];
+      if (file) {
+        bgMusic.src = URL.createObjectURL(file);
+        bgMusic.play().then(() => {
+          musicText.textContent = 'গান চলছে (Pause)';
+          musicIcon.textContent = '🔊';
+          isPlaying = true;
+        }).catch((err) => {
+          musicText.textContent = 'এরর: ' + err.name;
+          musicIcon.textContent = '⚠️';
+        });
+      }
+    }
+
+    // Auto-start music on first screen interaction
+    document.body.addEventListener('click', function autoPlayOnce() {
+      if (!isPlaying) {
+        bgMusic.play().then(() => {
+          musicText.textContent = 'গান চলছে (Pause)';
+          musicIcon.textContent = '🔊';
+          isPlaying = true;
+        }).catch(() => {});
+      }
+      document.body.removeEventListener('click', autoPlayOnce);
+    });
+
+    // 3. Interactive Diya Toggle
+    function toggleDiya(el, e) {
+      e.stopPropagation();
+      el.classList.toggle('unlit');
+      const rect = el.getBoundingClientRect();
+      launchFirework(rect.left + rect.width / 2, rect.top - 40);
+    }
+
+    // 4. Fireworks & Floating Sky Lanterns Animation
+    const canvas = document.getElementById('skyCanvas');
+    const ctx = canvas.getContext('2d');
+    let W = canvas.width = window.innerWidth;
+    let H = canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    });
+
+    const colors = ['#ffbe0b', '#fb5607', '#ff006e', '#8338ec', '#3a86ff', '#06d6a0', '#ffd166'];
+    let particles = [];
+    let lanterns = [];
+
+    class Lantern {
+      constructor() {
+        this.reset(true);
+      }
+      reset(initial = false) {
+        this.x = Math.random() * W;
+        this.y = initial ? Math.random() * H : H + 40;
+        this.size = 10 + Math.random() * 12;
+        this.speedY = 0.4 + Math.random() * 0.7;
+        this.sway = Math.random() * Math.PI * 2;
+      }
+      update() {
+        this.y -= this.speedY;
+        this.sway += 0.02;
+        this.x += Math.sin(this.sway) * 0.35;
+        if (this.y < -50) this.reset(false);
+      }
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        const grad = ctx.createRadialGradient(0, 0, 2, 0, 0, this.size * 1.5);
+        grad.addColorStop(0, 'rgba(255, 230, 128, 0.95)');
+        grad.addColorStop(0.5, 'rgba(255, 123, 0, 0.55)');
+        grad.addColorStop(1, 'rgba(255, 80, 0, 0)');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(0, 0, this.size * 1.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#ff9e00';
+        ctx.fillRect(-this.size * 0.45, -this.size * 0.6, this.size * 0.9, this.size * 1.1);
+        ctx.restore();
+      }
+    }
+
+    for (let i = 0; i < 18; i++) {
+      lanterns.push(new Lantern());
+    }
+
+    class Particle {
+      constructor(x, y, color) {
+        this.x = x;
+        this.y = y;
+        this.color = color;
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 1.5 + Math.random() * 5.5;
+        this.vx = Math.cos(angle) * speed;
+        this.vy = Math.sin(angle) * speed;
+        this.alpha = 1;
+        this.decay = 0.014 + Math.random() * 0.015;
+      }
+      update() {
+        this.vx *= 0.97;
+        this.vy *= 0.97;
+        this.vy += 0.05; // gravity
+        this.x += this.vx;
+        this.y += this.vy;
+        this.alpha -= this.decay;
+      }
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, this.alpha);
+        ctx.fillStyle = this.color;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, 2.4, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    function launchFirework(x, y) {
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      for (let i = 0; i < 55; i++) {
+        particles.push(new Particle(x, y, color));
+      }
+    }
+
+    // Click anywhere to burst fireworks
+    window.addEventListener('click', (e) => {
+      launchFirework(e.clientX, e.clientY);
+    });
+
+    // Periodic automatic fireworks
+    setInterval(() => {
+      launchFirework(W * (0.15 + Math.random() * 0.7), H * (0.12 + Math.random() * 0.4));
+    }, 2200);
+
+    function animate() {
+      ctx.clearRect(0, 0, W, H);
+
+      lanterns.forEach(l => {
+        l.update();
+        l.draw();
+      });
+
+      particles = particles.filter(p => p.alpha > 0);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+</body>
+</html>
